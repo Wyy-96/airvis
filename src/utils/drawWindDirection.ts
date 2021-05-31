@@ -2,61 +2,69 @@
 * @param state 响应式对象
 * @param emit  触发事件
 */
-// import echarts from "echarts";
+import * as echarts from 'echarts';
 import axios from "axios"
+
+// import china from '@/assets/china.json'
+
 export function DrawWind() {
 
   // 添加一个选项卡
   function WindDirection() {
-    console.log("ok")
     axios({//格式a
       method: 'get',
       url: 'api/getData/getWindData'
     }).then(function (resp) {
-      console.log(resp.data);
-    }).catch(resp => {
-      console.log('请求失败：' + resp.status + ',' + resp.statusText);
+      draw(resp.data.china, resp.data.winddata)
     });
-    // const option = {
-    //   geo: [{
-    //       map: 'china',
-    //       roam: true,
-    //       center: [121, 38],
-    //       zoom:5,
-    //   }],
-    //   series: [{
-    //       type: 'lines',
-    //       coordinateSystem: 'geo',
-    //       polyline: true,
-    //       data: drawdata,
-    //       silent: true,
-    //       lineStyle: {
-    //           // color: '#c23531',
-    //           // color: 'rgb(200, 35, 45)',
-    //           opacity: 0,
-    //           width: 2
-    //       },
-    //       progressiveThreshold: 500,
-    //       progressive: 200
-    //   }, {
-    //       type: 'lines',
-    //       coordinateSystem: 'geo',
-    //       polyline: true,
-    //       data: drawdata,
-    //       lineStyle: {
-    //           width: 0
-    //       },
-    //       effect: {
-    //           constantSpeed: 20,
-    //           show: true,
-    //           trailLength: 0.8,
-    //           symbolSize: 1.5
-    //       },
-    //       zlevel: 1
-    //   }]
-    // }
-    // const chart = echarts.init(document.getElementById('chart') as HTMLDivElement);
-    // chart.setOption(option)
+  }
+
+  function draw(china: any, winddata: any) {
+    echarts.registerMap('china', china, {});
+    const option = {
+      geo: [{
+        map: 'china',
+        roam: true,
+        center: [107, 36],
+        zoom: 1.2,
+        itemStyle: {
+          opacity: 1,
+          borderColor: echarts.color.modifyHSL('#000000'),
+          color:echarts.color.modifyHSL('#ffffff')
+        },
+        regions: [
+          {
+            name: "南海诸岛",
+            value: 0,
+            itemStyle: {
+              opacity: 0,
+              label: {
+                show: false
+              }
+            }
+          }
+        ]
+      }],
+      series: [{
+        type: 'lines',
+        coordinateSystem: 'geo',
+        polyline: true,
+        data: winddata,
+        lineStyle: {
+          color: echarts.color.modifyHSL('#5A94DF'),
+          width: 0
+        },
+        effect: {
+          constantSpeed: 20,
+          show: true,
+          trailLength: 0.9,
+          symbolSize: 1.5
+        },
+        zlevel: 1
+      }]
+    }
+    const chart = echarts.init(document.getElementById('chart') as HTMLDivElement);
+    chart.setOption(option)
   }
 
 
