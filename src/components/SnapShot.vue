@@ -1,0 +1,26 @@
+<template>
+  <div class="SnapShot">
+  </div>
+</template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+
+@Options({
+  props: {
+  }
+})
+export default class SnapShot extends Vue {
+
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="stylus">
+.SnapShot{
+    width 250px
+    height 100%
+    border 1px solid red
+    float left
+}
+</style>
