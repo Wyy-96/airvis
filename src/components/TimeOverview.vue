@@ -5,13 +5,15 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-
+import { drawLineOverview } from '@/utils/drawTimeOverview'
 @Options({
   props: {
   }
 })
 export default class TimeOverview extends Vue {
-
+  mounted(){
+    drawLineOverview()
+  }
 }
 </script>
 
@@ -20,6 +22,6 @@ export default class TimeOverview extends Vue {
 .TimeOverview{
     width 100%
     height 100px
-    border 1px solid red
+    border 1px solid #CCCCCC
 }
 </style>

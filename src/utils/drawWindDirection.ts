@@ -5,8 +5,6 @@
 import * as echarts from 'echarts';
 import axios from "axios"
 
-// import china from '@/assets/china.json'
-
 export function DrawWind() {
 
   // 添加一个选项卡
@@ -25,7 +23,7 @@ export function DrawWind() {
       geo: [{
         map: 'china',
         roam: true,
-        center: [107, 36],
+        center: [102, 36],
         zoom: 1.2,
         itemStyle: {
           opacity: 1,

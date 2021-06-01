@@ -38,12 +38,12 @@ export default class Home extends Vue {
 </script>
 <style lang="stylus">
 .top {
-  width: 100%;
+  width: 1900px;
   height: 650px;
 }
 
 .bottom {
-  width: 100%;
+  width: 1900px;
   height: 300px;
 }
 </style>

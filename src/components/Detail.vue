@@ -19,9 +19,9 @@ export default class Detail extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
 .Detail{
-    width 400px
+    width 590px
     height 100%
-    border 1px solid red
+    border 1px solid #CCCCCC
     float left
 }
 </style>

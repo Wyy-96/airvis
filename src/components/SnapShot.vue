@@ -1,5 +1,8 @@
 <template>
   <div class="SnapShot">
+    <div class="Header">
+      <p>AirPuVis</p>
+    </div>
   </div>
 </template>
 
@@ -18,9 +21,22 @@ export default class SnapShot extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
 .SnapShot{
-    width 250px
+    width 300px
     height 100%
-    border 1px solid red
+    border 1px solid #CCCCCC
     float left
+}
+.Header {
+  width 100%
+  height 30px
+  line-height 30px
+  background-color #5A94DF;
+  text-align left
+}
+.Header p{
+  margin 0px
+  margin-left 10px
+  color #ffffff
+  font-weight bold
 }
 </style>
