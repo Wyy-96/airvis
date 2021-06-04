@@ -27,8 +27,8 @@ export function DrawWind() {
         zoom: 1.2,
         itemStyle: {
           opacity: 1,
-          borderColor: echarts.color.modifyHSL('#000000'),
-          color:echarts.color.modifyHSL('#ffffff')
+          borderColor: echarts.color.modifyHSL('#ffffff'),
+          color:echarts.color.modifyHSL('#000000')
         },
         regions: [
           {

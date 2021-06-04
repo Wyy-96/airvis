@@ -20,7 +20,6 @@ export default class TimeLine extends Vue {
 <style scoped lang="stylus">
 .TimeLine{
     width 100%
-    height 150px
-    border 1px solid #CCCCCC
+    height 148px
 }
 </style>

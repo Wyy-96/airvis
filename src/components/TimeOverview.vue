@@ -21,7 +21,6 @@ export default class TimeOverview extends Vue {
 <style scoped lang="stylus">
 .TimeOverview{
     width 100%
-    height 100px
-    border 1px solid #CCCCCC
+    height 120px
 }
 </style>

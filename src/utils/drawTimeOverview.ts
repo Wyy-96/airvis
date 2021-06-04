@@ -18,31 +18,35 @@ export function drawLineOverview(): void {
 
     const MinMaxValue = MaxMin(data)
     const OpacityLinear = d3.scaleLinear()
-    .domain(MinMaxValue[0])
-    .range([0.2,1])
+      .domain(MinMaxValue[0])
+      .range([0.2, 1])
+    const scaleX = d3.scaleQuantize()
+      .domain([0,500]) // 连续的
+      .range([0, 1, 2, 3 ,4 ]); // 离散的
+    const Points = ["0,0 2,2 1,1 0,2 2,0","0,0 4,4 2,2 0,4 4,0","0,0 6,6 3,3 0,6 6,0","0,0 8,8 4,4 0,8 8,0","0,0 10,10 5,5 0,10 10,0"]  //MinMaxValue[1]
 
-
+    console.log(scaleX(50))
     var svg = divMap.append("svg")
       .attr("width", config.width)
       .attr("height", config.height);
 
 
-    const backgroundColor = ["#E25B45","#FF8357",  "#6CAC9C", "#89D5C9", "#FAC172" ,"#ADC965"]
+    const backgroundColor = ["#E25B45", "#516CA9","#FF8357",  "#89D5C9", "#FAC172", "#ADC965"]
 
     svg.append("g")
       .selectAll("rect")
       .data(data)
       .join("rect")
-      .attr("height", config.height / 6 -2)
+      .attr("height", config.height / 6 - 2)
       .attr("width", config.width)
-      .attr("transform", (d, i) => `translate(0,${config.height / 6 * i + i })`)
+      .attr("transform", (d, i) => `translate(0,${config.height / 6 * i + i})`)
       .attr("fill", "none")
 
     var yearRect = svg.append("g").selectAll("g")
       .data(data)
       .join("g")
-      .attr("stroke", (d, i) => backgroundColor[i])
-      .attr("transform", (d, i) => `translate(0,${config.height / 6 * i + i })`)
+      .attr("stroke", (d, i) => backgroundColor[i]) //
+      .attr("transform", (d, i) => `translate(0,${config.height / 6 * i + i})`)
 
     var dayRect = yearRect.selectAll("g")
       .data((d: any) => d)
@@ -56,10 +60,10 @@ export function drawLineOverview(): void {
     dayRect.selectAll("polyline")
       .data((d: any) => d.data)
       .join("polyline")
-      .attr("points", "0,0 6,6 3,3 0,6 6,0")
+      .attr("points", (d:any,i) =>  Points[scaleX(d.num)])
       // .attr("stroke", "white")
       .attr("transform", (d: any, i) => `translate(${x_stack * getTail(d.start)},${i * y_stack})`)
-      .attr("opacity", (d:any,i)=>OpacityLinear(d.aqi))  //(d:any,i)=> Opacity(d.aqi)
+      .attr("opacity", (d: any, i) => OpacityLinear(d.aqi))  //(d:any,i)=> Opacity(d.aqi)
 
     dayRect.selectAll("line")
       .data((d: any) => d.data)
@@ -68,44 +72,45 @@ export function drawLineOverview(): void {
       .attr("y1", 3)
       .attr("x2", (d: any) => (d.duration / 24) * 4 + 6)
       .attr("y2", 3)
-      .attr("stroke-width",2)
+      .attr("stroke-width", 1)
       // .attr("stroke", "white")
       .attr("transform", (d: any, i) => `translate(${x_stack * getTail(d.start)},${i * y_stack})`)
-      .attr("opacity", (d:any,i)=>OpacityLinear(d.aqi))
+      .attr("opacity", (d: any, i) => OpacityLinear(d.aqi))
 
-    // yearRect.selectAll("rect")
-    //   .data((d: any) => d)
-    //   .join("rect")
-    //   .attr("height", config.height/6 - 2)
-    //   .attr("width", config.width / 31)
-    //   .attr("x", (d, i) => config.width / 31 * i)
-    //   .attr("stroke", "#A6A6A6")
+    yearRect.selectAll("rect")
+      .data((d: any) => d)
+      .join("rect")
+      .attr("height", config.height / 6 - 2)
+      .attr("width", config.width / 31)
+      .attr("x", (d, i) => config.width / 31 * i)
+      .attr("stroke", "#3D3C3C")
+      .attr("fill", "none")
 
     function getTail(d: string) {
       let n = parseInt(d.substring(d.length - 2))
       return n
     }
 
-    function MaxMin(d:any){
-      let max = -1,min = 99999;
-      let numMax = -1,numMin = 9999999;
-      d.forEach((element:any) => {
-        element.forEach((el:any) => {
-          el.data.forEach((e:any) => {
+    function MaxMin(d: any) {
+      let max = -1, min = 99999;
+      let numMax = -1, numMin = 9999999;
+      d.forEach((element: any) => {
+        element.forEach((el: any) => {
+          el.data.forEach((e: any) => {
             let aqi = e.aqi
             let num = e.num
-            if(aqi<min) min = aqi;
+            if (aqi < min) min = aqi;
             else if (aqi > max) max = aqi;
 
-            if(num < numMin) numMin = num
-            else if(num > numMax) numMax = num
+            if (num < numMin) numMin = num
+            else if (num > numMax) numMax = num
           });
         });
       });
-      return [[min,max],[numMin,numMax]]
+      return [[min, max], [numMin, numMax]]
     }
 
-   
+
   }
 
 }
