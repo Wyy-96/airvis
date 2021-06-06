@@ -91,7 +91,9 @@ export function drawLineOverview(): void {
       .on("click", function (d, i) {
         RemovehightLight()
         d3.select(this).attr("class", "active").attr("opacity", 0.3)
+        
         store.commit("timeLineData/SET_NOW_DATA",d3.select(this).data())
+
       }).on("mouseover", function (d, i) {
         d3.select(this).attr("opacity", 0.2);
       })

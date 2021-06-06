@@ -8,7 +8,7 @@ const mutations = {
     state.nowData = nowData
   },
   Empty_DATA_LIST: (state,data) =>{
-    state.nowData = {}
+    state.nowData = data
   },
 }
 const actions = {
