@@ -21,5 +21,7 @@ export default class TimeLine extends Vue {
 .TimeLine{
     width 100%
     height 148px
+    border-bottom 1px solid white
+    margin-bottom 10px
 }
 </style>

@@ -49,7 +49,7 @@ export function DrawWind() {
         polyline: true,
         data: winddata,
         lineStyle: {
-          color: echarts.color.modifyHSL('#5A94DF'),
+          color: echarts.color.modifyHSL('#4E6E97'), //#7EAFF0
           width: 0
         },
         effect: {
