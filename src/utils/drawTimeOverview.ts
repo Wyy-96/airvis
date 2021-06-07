@@ -60,6 +60,7 @@ export function drawLineOverview(): void {
     dayRect.selectAll("polyline")
       .data((d: any) => d.data)
       .join("polyline")
+      .attr("fill", "none")
       .attr("points", (d: any, i) => Points[scaleX(d.num)])
       // .attr("stroke", "white")
       .attr("transform", (d: any, i) => `translate(${x_stack * getTail(d.start)},${i * y_stack})`)
@@ -91,14 +92,14 @@ export function drawLineOverview(): void {
       .on("click", function (d, i) {
         RemovehightLight()
         d3.select(this).attr("class", "active").attr("opacity", 0.3)
-        
-        store.commit("timeLineData/SET_NOW_DATA",d3.select(this).data())
-
+        store.commit("timeLineData/SET_SELECTED_DATA",d3.select(this).data())
       }).on("mouseover", function (d, i) {
         d3.select(this).attr("opacity", 0.2);
+        store.commit("timeLineData/SET_NOW_DATA",d3.select(this).data())
       })
       .on("mouseout", function (d, i) {
         d3.select(this).attr("opacity", 0.05);
+        store.commit("timeLineData/SET_NOW_DATA","")
         var series = d3.selectAll('.active')
         if (series != null) series.attr("opacity", 0.3)
       })
@@ -129,7 +130,7 @@ export function drawLineOverview(): void {
 
     function RemovehightLight() {
       var series = d3.selectAll('.active')
-      if (series != null) series.attr("class", 'dayRect').attr("opacity", 0.1)
+      if (series != null) series.attr("class", 'dayRect').attr("opacity", 0.05)
 
     }
 
