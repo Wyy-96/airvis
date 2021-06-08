@@ -38,21 +38,21 @@ export function drawDayDetail(): void {
       var color = d3.schemeCategory10;
       var hour_x = config.width / 24;
 
-      dayDetailData.forEach((element:any) => {
+      dayDetailData.forEach((element: any) => {
         let key = Object.keys(element)
-        if(key.includes("children") == true){
+        if (key.includes("children") == true) {
           dataLength += element["children"].length
         }
       });
 
       var treeMap = svg.append("g")
-        .attr("class","DetailG")
+        .attr("class", "DetailG")
         .selectAll("g")
         .data(dayDetailData)
         .join("g")
         .attr("class", (d: any, i) => "g" + d.id)
         .attr("stroke", "white")
-        .attr("transform", (d, i) => `translate(${hour_x / 2},${ (config.height / dataLength) * i})`);
+        .attr("transform", (d, i) => `translate(${hour_x / 2},${(config.height / dataLength) * i})`);
 
       var link = treeMap.selectAll("path")
         .data((d) => root(d).links())
@@ -61,8 +61,8 @@ export function drawDayDetail(): void {
         .attr("d", (d: any) => {
           return linktest(d)
         })
-        .attr("stroke-width",0.5)
-        .attr("opacity",0.9);
+        .attr("stroke-width", 0.5)
+        .attr("opacity", 0.9);
 
       var node = treeMap.selectAll("g")
         .data((d) => root(d).descendants())
@@ -83,8 +83,43 @@ export function drawDayDetail(): void {
         .attr("y2", 0)
         .attr("stroke", (d: any) => d.data.pattern == -1 ? "#999" : color[d.data.pattern])
         .attr("stroke-width", "1.5px")
-      .attr("transform", (d, i) => `translate(0,${0})`)
+        .attr("transform", (d, i) => `translate(0,${0})`)
 
+      var hour = []
+      for (let i = 0; i <= 23; i++) {
+        hour[i] = pad(i,2);
+      }
+      d3.select(".DetailG").selectAll("rect")
+        .data(hour)
+        .join("rect")
+        .attr("class", "rect")
+        .attr("height", config.height)
+        .attr("width", config.width / 24)
+        .attr("x", (d, i) => config.width / 24 * i)
+        .attr("fill", "#A1CCE9")
+        .attr("opacity",0.05)
+        .on("click", function (d, i) {
+          RemovehightLight()
+          d3.select(this).attr("class", "dayDetail_active").attr("opacity", 0.3)
+          store.commit("timeLineData/SET_SELECTED_TIME",d3.select(this).data())
+        }).on("mouseover", function (d, i) {
+          d3.select(this).attr("opacity", 0.2);
+        })
+        .on("mouseout", function (d, i) {
+          d3.select(this).attr("opacity", 0.05);
+          var series = d3.selectAll('.dayDetail_active')
+          if (series != null) series.attr("opacity", 0.3)
+        })
+
+        function RemovehightLight() {
+          var series = d3.selectAll('.dayDetail_active')
+          if (series != null) series.attr("class", 'rect').attr("opacity", 0.05)
+        }
+
+        // 整数 按n位补0
+        function pad(num:any, n:any) {
+          return Array(n>num?(n-(''+num).length+1):0).join("0")+num;
+         }
     }
 
     function drawPatterns() {

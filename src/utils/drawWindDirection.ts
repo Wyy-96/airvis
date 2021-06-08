@@ -61,7 +61,7 @@ export function DrawWind() {
         zlevel: 1
       }]
     }
-    const chart = echarts.init(document.getElementById('chart') as HTMLDivElement);
+    const chart = echarts.init(document.getElementById('chart') as HTMLElement);
     chart.setOption(option)
   }
 

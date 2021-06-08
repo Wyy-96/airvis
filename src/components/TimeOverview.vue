@@ -15,9 +15,6 @@ export default defineComponent({
   mounted() {
       drawLineOverview()
   },
-//   watch(()=>book.name,()=>{//通过一个函数返回要监听的属性
-//  	console.log('书名改变了')
-//  })
 
 })
 </script>

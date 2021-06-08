@@ -5,13 +5,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, watch} from "vue";
 import { DrawWind } from "@/utils/drawWindDirection";
+import { drawAQIMap } from '@/utils/AQI'
 import axios from "axios";
+import store from "@/store";
 export default defineComponent({
   name: "MapSVG",
   setup() {
-    return {};
+    const Hour = computed(() => store.getters.selectedTime);
+    watch(Hour, () => {
+      drawAQIMap(Hour.value[0]);
+    });
+    return {
+    };
   },
   mounted() {
     this.$nextTick(function () {
