@@ -13,13 +13,12 @@ export function DrawWind() {
       method: 'get',
       url: 'api/getData/getWindData'
     }).then(function (resp) {
-      draw(resp.data.china, resp.data.winddata, resp.data.records)
+      draw(resp.data.china, resp.data.winddata)
     });
   }
 
-  function draw(china: any, winddata: any, data: any) {
+  function draw(china: any, winddata: any) {
     echarts.registerMap('china', china, {});
-    console.log(data)
     var COLORS = ["#070093", "#1c3fbf", "#1482e5", "#70b4eb", "#b4e0f3", "#ffffff"];
 
 
@@ -32,11 +31,10 @@ export function DrawWind() {
         roam: true,
         center: [102, 36],
         zoom: 1.2,
-        zlevel: 1,
         itemStyle: {
-          opacity: 1,
+          opacity: 0.5,
           borderColor: echarts.color.modifyHSL('#ffffff'),
-          color: echarts.color.modifyHSL('#FDFFFD') //echarts.color.modifyHSL('#000000')
+          color: echarts.color.modifyHSL('#252725') //echarts.color.modifyHSL('#000000')
         },
         regions: [
           {
@@ -51,46 +49,25 @@ export function DrawWind() {
           }
         ]
       }],
-      visualMap: {
-        min: 0,
-        max: 400,
-        show:true,
-        seriesIndex: 0,
-        color: ["rgba(28,28,28,1)","rgba(139,0,0,1)","rgba(160,32,240,1)","rgba(255,0,0,1)",
-        "rgba(255,165,0,1)","rgba(255,255,0,1)","rgba(0,255,0,1)"]
-      },
       series: [
-        {
-          type: 'heatmap',
+          {
+          type: 'lines',
           coordinateSystem: 'geo',
-          data: data,
-          animation: false,
-          encode: {
-            tooltip: 2
+          polyline: true,
+          data: winddata,
+          lineStyle: {
+            color: echarts.color.modifyHSL('#F0F2F559'), //#7EAFF0
+            width: 0
           },
-          pointSize: 2,
-          blurSize: 3,
-          zlevel: 3,
-          opacity: 1,
+          effect: {
+            constantSpeed: 20,
+            show: true,
+            trailLength: 0.7,
+            symbolSize: 1.5,
+            opacity: 0.4,
+          },
+          zlevel: 2
         },
-        //   {
-        //   type: 'lines',
-        //   coordinateSystem: 'geo',
-        //   polyline: true,
-        //   data: winddata,
-        //   lineStyle: {
-        //     color: echarts.color.modifyHSL('#F0F2F559'), //#7EAFF0
-        //     width: 0
-        //   },
-        //   effect: {
-        //     constantSpeed: 20,
-        //     show: true,
-        //     trailLength: 0.7,
-        //     symbolSize: 1.5,
-        //     opacity: 0.4,
-        //   },
-        //   zlevel: 2
-        // },
       ],
     }
     const chart = echarts.init(document.getElementById('chart') as HTMLElement);
