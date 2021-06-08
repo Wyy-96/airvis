@@ -59,12 +59,7 @@ export function drawAQIMap(ymd: any, hour: any): void {
       .attr("width", 1.6)
       .attr("height", 1.6)
       .attr("transform", `rotate(${0}) translate(-0.8,-0.8)`)
-      .attr("fill", (d:any) => {
-        // console.log(colorIndex(parseFloat(d["AQI"])))
-        return colorIndex(parseFloat(d["AQI"]))
-        return colorIndex(parseFloat(d["AQI"]))
-      })
-    //.attr("transform", "translate(, 20)")
+      .attr("fill", (d:any) => colorIndex(parseFloat(d["AQI"])))
 
   }
 }

@@ -32,7 +32,7 @@ export function DrawWind() {
         center: [102, 36],
         zoom: 1.2,
         itemStyle: {
-          opacity: 0.5,
+          opacity: 0,
           borderColor: echarts.color.modifyHSL('#ffffff'),
           color: echarts.color.modifyHSL('#252725') //echarts.color.modifyHSL('#000000')
         },
@@ -56,7 +56,7 @@ export function DrawWind() {
           polyline: true,
           data: winddata,
           lineStyle: {
-            color: echarts.color.modifyHSL('#F0F2F559'), //#7EAFF0
+            color: echarts.color.modifyHSL('#FDFDFD'), //#7EAFF0
             width: 0
           },
           effect: {
@@ -64,14 +64,18 @@ export function DrawWind() {
             show: true,
             trailLength: 0.7,
             symbolSize: 1.5,
-            opacity: 0.4,
+            opacity: 1,
           },
           zlevel: 2
         },
       ],
     }
-    const chart = echarts.init(document.getElementById('chart') as HTMLElement);
+    let div = document.getElementById('chart')
+    if(div != null){
+      const chart = echarts.init(div);
     chart.setOption(option)
+    }
+    
   }
 
 

@@ -1,6 +1,8 @@
 <template>
   <div class="MapSVG">
+    <div id="map"></div>
     <div id="chart"></div>
+    
   </div>
 </template>
 
@@ -8,6 +10,7 @@
 import { computed, defineComponent, watch} from "vue";
 import { DrawWind } from "@/utils/drawWindDirection";
 import { drawAQIMap } from '@/utils/AQI'
+import { drawGeoMap } from '@/utils/drawGeoMap'
 import axios from "axios";
 import store from "@/store";
 export default defineComponent({
@@ -15,6 +18,8 @@ export default defineComponent({
   setup() {
     const Hour = computed(() => store.getters.selectedTime);
     watch(Hour, () => {
+      const { WindDirection } = DrawWind();
+      WindDirection();
       const ymd = store.getters.selectedYMD
       drawAQIMap(ymd,Hour.value[0]);
     });
@@ -24,8 +29,9 @@ export default defineComponent({
   mounted() {
     this.$nextTick(function () {
       // 仅在渲染整个视图之后运行的代码
-      const { WindDirection } = DrawWind();
-      WindDirection();
+      // const { WindDirection } = DrawWind();
+      // WindDirection();
+      drawGeoMap()
     });
   },
 });
@@ -46,6 +52,13 @@ button {
 }
 
 #chart {
+  width: 900px;
+  height: 100%;
+}
+#map{
+  position absolute;
+  left 300
+  top 0
   width: 900px;
   height: 100%;
 }
