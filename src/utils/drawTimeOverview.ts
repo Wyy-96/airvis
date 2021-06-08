@@ -95,7 +95,6 @@ export function drawLineOverview(): void {
         store.commit("timeLineData/SET_SELECTED_DATA",d3.select(this).data())  //SET_SELECTED_Y_M_D
         let Y_M_D:any = d3.select(this).data()[0]
         store.commit("timeLineData/SET_SELECTED_Y_M_D",Y_M_D.day)
-        console.log(store.getters.selectedYMD)
       }).on("mouseover", function (d, i) {
         d3.select(this).attr("opacity", 0.2);
         store.commit("timeLineData/SET_NOW_DATA",d3.select(this).data())

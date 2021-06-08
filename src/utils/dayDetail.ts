@@ -101,7 +101,9 @@ export function drawDayDetail(): void {
         .on("click", function (d, i) {
           RemovehightLight()
           d3.select(this).attr("class", "dayDetail_active").attr("opacity", 0.3)
+          // 保存选择的具体小时
           store.commit("timeLineData/SET_SELECTED_TIME",d3.select(this).data())
+
         }).on("mouseover", function (d, i) {
           d3.select(this).attr("opacity", 0.2);
         })

@@ -15,7 +15,8 @@ export default defineComponent({
   setup() {
     const Hour = computed(() => store.getters.selectedTime);
     watch(Hour, () => {
-      drawAQIMap(Hour.value[0]);
+      const ymd = store.getters.selectedYMD
+      drawAQIMap(ymd,Hour.value[0]);
     });
     return {
     };
