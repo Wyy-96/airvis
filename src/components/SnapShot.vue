@@ -4,12 +4,17 @@
       <p>AirPuVis</p>
     </div>
     <div class="information">
-      <el-switch
+      <div class = "selectWind">
+        <p> 是否显示风向</p>
+        <el-switch
         v-model="value"
+        style="margin-top: 11px"
         active-color="#13ce66"
-        inactive-color="#ff4949"
+        inactive-color="#969292"
       >
       </el-switch>
+      </div>
+      <div class = "selecTime"> {{ selectYMD }}</div>
     </div>
     <div class="patternMap"></div>
   </div>
@@ -25,12 +30,16 @@ export default defineComponent({
   data() {
     return {
       value: true,
+      selectYMD : ''
     };
   },
   setup() {
     const ymd: any = computed(() => store.getters.selectedYMD);
     watch(ymd, () => {
-      if (ymd != null) drawPatternMap(store.getters.selectedYMD);
+      if (ymd != null) {
+        selectYMD.value = ymd
+        drawPatternMap(store.getters.selectedYMD);
+        }
     });
     return {};
   },
@@ -63,11 +72,24 @@ export default defineComponent({
 
 .information {
   width: 100%;
-  height: 60%;
+  height: 55%;
 }
 
 .patternMap {
   width: 100%;
-  height: 35%;
+  height: 40%;
+}
+
+.selectWind{
+  width 100%
+  height 30px
+}
+.selectWind p{
+  float left
+  font 1em sans-serif
+  color white
+  margin-top 10px
+  margin-left 40px
+
 }
 </style>
