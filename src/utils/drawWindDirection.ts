@@ -3,27 +3,32 @@
 * @param emit  触发事件
 */
 import * as echarts from 'echarts';
-import axios from "axios"
+import axios from "axios";
+import store from "@/store";
 
-export function DrawWind() {
+export function WindDirection(ymd: any, hour: any) {
 
   // 添加一个选项卡
-  function WindDirection() {
-    axios({//格式a
-      method: 'get',
-      url: 'api/getData/getWindData'
-    }).then(function (resp) {
+  if(hour.length < 2){
+    hour = '0' +hour
+  }
+  console.log(ymd + hour)
+  axios.get("api/getData/getWindData", {
+    params: {
+      ymdh: ymd + hour
+    },
+  })
+    .then(function (resp) {
       draw(resp.data.china, resp.data.winddata)
     });
-  }
+  
+  
+
+
 
   function draw(china: any, winddata: any) {
+    console.log(china,winddata)
     echarts.registerMap('china', china, {});
-    var COLORS = ["#070093", "#1c3fbf", "#1482e5", "#70b4eb", "#b4e0f3", "#ffffff"];
-
-
-    
-    
 
     const option = {
       geo: [{
@@ -50,7 +55,7 @@ export function DrawWind() {
         ]
       }],
       series: [
-          {
+        {
           type: 'lines',
           coordinateSystem: 'geo',
           polyline: true,
@@ -71,15 +76,10 @@ export function DrawWind() {
       ],
     }
     let div = document.getElementById('chart')
-    if(div != null){
+    if (div != null) {
       const chart = echarts.init(div);
-    chart.setOption(option)
+      chart.setOption(option)
     }
-    
+
   }
-
-
-  return {
-    WindDirection,
-  };
 }

@@ -3,15 +3,17 @@ import axios from "axios"
 import store from "@/store";
 
 export function drawDayDetail(): void {
-  axios({//格式a
-    method: 'get',
-    url: 'api/getData/getPatternsData'
-  }).then(function (resp) {
-    Draw(resp.data)
-  });
+  console.log(store.getters.selectedYMD)
+  axios.get("api/getdata/getdayDetailData", {
+    params: {
+      ymd: store.getters.selectedYMD
+    },
+  })
+    .then(function (resp) {
+      Draw(resp.data)
+    });
 
   function Draw(data: any) {
-    const PatternsData = data.PatternsData
     const dayDetailData = data.dayDetailData
 
     d3.selectAll(".DetailG").remove()
@@ -22,7 +24,6 @@ export function drawDayDetail(): void {
     }
 
     drawDetail()
-    // drawPatterns()
 
 
     function drawDetail() {
@@ -52,7 +53,7 @@ export function drawDayDetail(): void {
         .join("g")
         .attr("class", (d: any, i) => "g" + d.id)
         .attr("stroke", "white")
-        .attr("transform", (d, i) => `translate(${hour_x / 2},${(config.height / dataLength) * i})`);
+        .attr("transform", (d, i) => `translate(${hour_x / 2},${(config.height / dataLength) * i * 1.5})`);
 
       var link = treeMap.selectAll("path")
         .data((d) => root(d).links())
@@ -122,36 +123,6 @@ export function drawDayDetail(): void {
         function pad(num:any, n:any) {
           return Array(n>num?(n-(''+num).length+1):0).join("0")+num;
          }
-    }
-
-    function drawPatterns() {
-      var color = d3.schemeCategory10;
-      var patternType = [{ name: "pattern_1" }, { name: "pattern_2" }, { name: "pattern_3" }, { name: "pattern_4" },
-      { name: "pattern_5" }, { name: "pattern_6" }]
-
-      var xScale = d3.scaleLinear()
-        .domain([0, 23])
-        .range([0, config.width]);
-
-      var yScale = d3.scaleLinear()
-        .domain([25, 0])
-        .range([0, config.height]);
-
-      //画a折线
-      var alinePath = d3.line() //d3线段生成器
-        .x((d: any) => xScale(d.hour))
-        .y((d: any) => yScale(d.value));
-
-      var gpath = svg.append("g").selectAll("g")
-        .data(PatternsData)
-        .join("g")
-
-      gpath.append("path")
-        .attr("d", (d: any) => alinePath(d.pattern))
-        .attr("stroke", (d, i) => color[i])
-        .attr("stroke-width", "1px")
-        .attr("fill", "none")
-        .attr("transform", "translate(25,0)");
     }
   }
 }

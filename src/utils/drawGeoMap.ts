@@ -19,8 +19,8 @@ export function drawGeoMap(): void {
       height: parseInt(divMap.style("height")) - 2,
     }
     const svg = divMap.append("svg")
-      .attr("width", config.width)
-      .attr("height", config.height)
+      .attr("width", "900px")
+      .attr("height", "650px")
 
     const mapG = svg.append("g").style("transform", "scale(1,1.07)")
     var projection = d3.geoMercator() //投影

@@ -10,6 +10,9 @@ const getters ={
   },
   selectedYMD(state:any){
     return state.timeLineData.selectedYMD
+  },
+  flagID(state:any){
+    return state.timeLineData.flagID
   }
 }
 export default getters

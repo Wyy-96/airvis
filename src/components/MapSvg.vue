@@ -1,16 +1,18 @@
 <template>
   <div class="MapSVG">
+    
     <div id="map"></div>
     <div id="chart"></div>
-    
+    <div id="flag"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, watch} from "vue";
-import { DrawWind } from "@/utils/drawWindDirection";
+import { WindDirection } from "@/utils/drawWindDirection";
 import { drawAQIMap } from '@/utils/AQI'
-import { drawGeoMap } from '@/utils/drawGeoMap'
+import { drawGeoMap } from '@/utils/drawGeoMap';
+import * as d3 from "d3"
 import axios from "axios";
 import store from "@/store";
 export default defineComponent({
@@ -18,19 +20,18 @@ export default defineComponent({
   setup() {
     const Hour = computed(() => store.getters.selectedTime);
     watch(Hour, () => {
-      const { WindDirection } = DrawWind();
-      WindDirection();
+      d3.select("#flag").select("svg").remove()
+      d3.select("#chart").select("div").select("svg").remove()
       const ymd = store.getters.selectedYMD
+      WindDirection(ymd,Hour.value[0]);
       drawAQIMap(ymd,Hour.value[0]);
+     
     });
     return {
     };
   },
   mounted() {
     this.$nextTick(function () {
-      // 仅在渲染整个视图之后运行的代码
-      // const { WindDirection } = DrawWind();
-      // WindDirection();
       drawGeoMap()
     });
   },
@@ -41,7 +42,7 @@ export default defineComponent({
 <style scoped lang="stylus">
 .MapSVG {
   width: 1000px;
-  height: 100%;
+  height: 650px;
   border: 1px solid #CCCCCC;
   float: left;
 }
@@ -60,6 +61,13 @@ button {
   left 300
   top 0
   width: 900px;
-  height: 100%;
+  height: 650px;
+}
+#flag{
+  position absolute;
+  left 280
+  top 0
+  width: 900px;
+  height: 650px;
 }
 </style>

@@ -3,7 +3,8 @@ const state = {
   selectedData: {},
   nowData: {},
   selectedTime: {},
-  selectedYMD: ''
+  selectedYMD: '',
+  flagID : []
 }
 
 const mutations = {
@@ -18,6 +19,9 @@ const mutations = {
   },
   SET_SELECTED_Y_M_D:(state: any, selectedYMD: any)=>{
     state.selectedYMD = selectedYMD
+  },
+  SET_FLAG_ID:(state: any, flagID: any)=>{
+    state.flagID = flagID
   }
 }
 const actions = {
