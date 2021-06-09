@@ -7,11 +7,16 @@
       <div class="info">
         <el-table
         :data="tableData"
-        :cell-style="{padding:'5px 0px' }"
-        style="width: 80%;background-color:#000000">
+        :cell-style="{padding:'5px 0px' ,background: '#000000', color:'#CFCCCC'}"
+        :header-cell-style = "{
+          background: '#000000',
+          color:'#CFCCCC'
+        }"
+        style="width: 100%;background-color:#000000">
           <el-table-column prop="date" label="空气质量" width="80">
           </el-table-column>
-          <el-table-column prop="address" label="污染指数分级" width="120"> </el-table-column>
+          <el-table-column prop="address" label="污染指数分级" width="120"> </el-table-column> //<el-avatar shape="square" :size="50" ></el-avatar>
+          <el-table-column prop="address"> <el-avatar shape="square" :size="15" ></el-avatar></el-table-column>
         </el-table>
       </div>
       <div class="selectWind">
@@ -140,11 +145,14 @@ export default defineComponent({
 .info {
   width: 100%;
   height: 250px;
-  border: 1px solid red;
 }
 
 .selecTime p {
   color: white;
   font: 2em sans-serif;
+}
+
+>>>.el-avatar{
+  background: red
 }
 </style>
