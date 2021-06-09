@@ -38,7 +38,7 @@ export default defineComponent({
 .MapSVG {
   width: 1000px;
   height: 650px;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #333333;
   float: left;
 }
 

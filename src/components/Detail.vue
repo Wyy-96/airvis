@@ -34,7 +34,7 @@ export default defineComponent({
 .Detail{
     width 590px
     height 100%
-    border 1px solid #CCCCCC
+    border 1px solid #333333
     float left
 }
 .Polyline {
