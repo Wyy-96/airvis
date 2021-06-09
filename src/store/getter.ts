@@ -13,6 +13,12 @@ const getters ={
   },
   flagID(state:any){
     return state.timeLineData.flagID
+  },
+  pullutionHour(state:any){
+    return state.timeLineData.pullutionHour
+  },
+  pullution(state:any){
+    return state.timeLineData.pullution
   }
 }
 export default getters

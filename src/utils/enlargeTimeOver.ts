@@ -43,9 +43,8 @@ export function drawEnlargeTimeLine(data: any): void {
     .attr("x2", (d: any) => (d.duration / 24) * x_stack + LinePoints[scaleX(d.num)][0])
     .attr("y2", (d: any, i) => LinePoints[scaleX(d.num)][1])
     .attr("stroke-width", 0.5)
-    // .attr("stroke", "white")
     .attr("transform", (d: any, i) => `translate(${x_stack * getTail(d.start) + x_stack /2 + (scaleX(d.num) -2) * -2},${i * y_stack})`)
-  // .attr("opacity", (d: any, i) => OpacityLinear(d.aqi))
+
 
   function MaxMin(d: any) {
     let max = -1, min = 99999;

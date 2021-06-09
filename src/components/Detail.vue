@@ -1,13 +1,14 @@
 <template>
   <div class="Detail">
+    <div class="Pie"></div>
+    <div class="Polyline"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, watch} from "vue";
 import { drawLineChart } from "@/utils/lineChart";
-import { drawPatternMap } from "@/utils/patternMap";
-import axios from "axios";
+import { drawPieChart } from '@/utils/Pie'
 import store from "@/store";
 export default defineComponent({
   name: "MapSVG",
@@ -17,10 +18,10 @@ export default defineComponent({
       if(flag != null)
         drawLineChart(flag.value[0],store.getters.selectedYMD);
     });
-    const ymd:any = computed(() => store.getters.selectedYMD);
-    watch(ymd, () => {
-      if(ymd != null)
-        drawPatternMap(store.getters.selectedYMD);
+    const pHour = computed(() => store.getters.pullutionHour);
+    watch(pHour, () => {
+      if(pHour != null)
+        drawPieChart();
     });
     return {
     };
@@ -36,4 +37,12 @@ export default defineComponent({
     border 1px solid #CCCCCC
     float left
 }
+.Polyline {
+  width 590px
+  height 50%
+}
+.Pie {
+  width 590px
+  height 50%
+} 
 </style>

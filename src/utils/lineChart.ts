@@ -3,7 +3,6 @@ import axios from "axios";
 import store from "@/store";
 
 export function drawLineChart(data: any, ymd: any): void {
-  console.log(ymd)
   axios({//格式a
     method: 'get',
     url: 'api/getData/getFlagDetail',
@@ -12,19 +11,17 @@ export function drawLineChart(data: any, ymd: any): void {
       ymd: ymd
     },
   }).then(function (resp) {
-    drawlinechart(resp.data.actualAQI,resp.data.patternAQI,resp.data.pattern)
-    //resp.data.actualAQI    resp.data.patternAQI
+    drawlinechart(resp.data.actualAQI, resp.data.patternAQI, resp.data.pattern);
+    store.commit('timeLineData/SET_PULLUTION', resp.data.pollution)
+    store.commit('timeLineData/SET_PULLUTION_HOUR', 0)
   });
-
-
-
   const strokewidth = '1px';
   const height = 300,
     width = 600,
     margin = 30;
 
   const drawlinechart = (actualAQI: any, patternAQI: any, pattern: any) => {
-    d3.select('.Detail').select('.linechart').remove()
+    d3.select('.Polyline').select('.linechart').remove()
     const actual_data = actualAQI
     const data = patternAQI
 
@@ -51,7 +48,7 @@ export function drawLineChart(data: any, ymd: any): void {
     const xAxis = d3.axisBottom(xScale);
     //const yAxis = d3.axisLeft(yScale);
 
-    const svg = d3.select('.Detail').append('svg').attr('width', width).attr('height', height).attr("class","linechart")
+    const svg = d3.select('.Polyline').append('svg').attr('width', width).attr('height', height).attr("class", "linechart")
     svg.append('g')
       .attr("transform", "translate(0," + (height - margin) + ")")
       .attr("class", "axis")
@@ -80,7 +77,6 @@ export function drawLineChart(data: any, ymd: any): void {
       .data([actual_data])
       .join("path")
       .attr("d", (d: any) => {
-        console.log(line2(d.data))
         return line2(d.data)
       })
       .attr("stroke", color[pattern])
@@ -89,18 +85,62 @@ export function drawLineChart(data: any, ymd: any): void {
       .attr("transform", "translate(0,0)")
       .style("stroke-dasharray", "5,5")
 
-    const gpath = svg.append("g")
+    svg.append("g")
       .attr("class", "gpath")
       .append("path")
       .data([data])
       .join("path")
-      .attr("d", (d:any)=>line(d.pattern))
+      .attr("d", (d: any) => line(d.pattern))
       .attr("stroke", color[pattern])
       .attr("stroke-width", strokewidth)
       .attr("fill", "none")
       .attr("transform", "translate(0,0)");
 
 
-  }
+    var hour = []
+    for (let i = 0; i <= 23; i++) {
+      hour[i] = i;
+    }
+    svg.append("g")
+      .selectAll("rect")
+      .data(hour)
+      .join("rect")
+      .attr("id", (d:any)=>"timeRect" + d)
+      .attr("height", height - 30)
+      .attr("width", 2)
+      .attr("x", (d, i) => xScale(i))
+      .attr("fill", "#DF7410")
+      .attr("opacity", 0)
 
+    svg.append("g").selectAll("rect")
+      .data(hour)
+      .join("rect")
+      .attr("class", "timeRect")
+      .attr("height", height - 20)
+      .attr("width", (width - 40) / 24)
+      .attr("x", (d, i) => (width - 40) / 24 * i)
+      .attr("fill", "#A1CCE9")
+      .attr("transform", "translate(22,0)")
+      .attr("opacity", 0)
+      .on("click", function (d, i) {
+        RemovehightLight()
+        let id = d3.select(this).data()[0]
+        d3.select("#timeRect" + id).attr("class", "timeRect_active").attr("opacity", 1)
+        store.commit("timeLineData/SET_PULLUTION_HOUR", id)
+
+      }).on("mouseover", function (d, i) {
+        d3.select(this).attr("opacity", 0.1);
+      })
+      .on("mouseout", function (d, i) {
+        d3.select(this).attr("opacity", 0);
+        var series = d3.selectAll('.timeRect_active')
+        if (series != null) series.attr("opacity", 1)
+      })
+
+    function RemovehightLight() {
+      var series = d3.selectAll('.timeRect_active')
+      if (series != null) series.attr("class", '').attr("opacity", 0)
+    }
+
+  }
 }

@@ -21,7 +21,6 @@ export function drawAQIMap(ymd: any, hour: any): void {
 
   function Draw(data: any) {
     const divMap = d3.select("#chart")
-    console.log(divMap)
     const config = {
       width: parseInt(divMap.style("width")) - 2,
       height: parseInt(divMap.style("height")) - 2,
@@ -80,8 +79,12 @@ export function drawAQIMap(ymd: any, hour: any): void {
       .attr("id", (d: any, i) => i)
       .attr("transform", (d: any, i) => {
         let scaleXY = projection([d.lon, d.lat])
-        if (scaleXY != null)
+
+        if (scaleXY != null){
+          scaleXY[0] = scaleXY[0] - 25
+          scaleXY[1] = scaleXY[1] + 10
           return "translate(" + scaleXY[0] + "," + scaleXY[1] + ")"
+        }
         return null
       })
       .append("polygon")     //画一个旗帜

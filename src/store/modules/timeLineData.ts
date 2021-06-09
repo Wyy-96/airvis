@@ -4,7 +4,9 @@ const state = {
   nowData: {},
   selectedTime: {},
   selectedYMD: '',
-  flagID : []
+  flagID : [],
+  pullutionHour : -1,
+  pullution: []
 }
 
 const mutations = {
@@ -22,6 +24,12 @@ const mutations = {
   },
   SET_FLAG_ID:(state: any, flagID: any)=>{
     state.flagID = flagID
+  },
+  SET_PULLUTION_HOUR:(state: any, pullutionHour: any)=>{
+    state.pullutionHour = pullutionHour
+  },
+  SET_PULLUTION(state: any, pullution: any){
+    state.pullution = pullution
   }
 }
 const actions = {
