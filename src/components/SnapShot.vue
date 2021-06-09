@@ -3,7 +3,7 @@
     <div class="Header">
       <p>AirPuVis</p>
     </div>
-    <div class="information">
+    < class="information">
       <div class = "selectWind">
         <p> 是否显示风向</p>
         <el-switch
@@ -14,14 +14,15 @@
       >
       </el-switch>
       </div>
-      <div class = "selecTime"> {{ selectYMD }}</div>
+    
+      <div class = "selecTime"><p> {{ selectYMD }}</p></div>
     </div>
     <div class="patternMap"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, watch } from "vue";
+import { computed, defineComponent, watch, ref } from "vue";
 import * as d3 from "d3";
 import store from "@/store";
 import { drawPatternMap } from "@/utils/patternMap";
@@ -30,18 +31,26 @@ export default defineComponent({
   data() {
     return {
       value: true,
-      selectYMD : ''
     };
   },
   setup() {
+    const selectYMD = ref("a");
     const ymd: any = computed(() => store.getters.selectedYMD);
     watch(ymd, () => {
       if (ymd != null) {
-        selectYMD.value = ymd
+        selectYMD.value =
+          ymd.value.substring(0, 4) +
+          "年" +
+          ymd.value.substring(4, 6) +
+          "月" +
+          ymd.value.substring(6, 8) +
+          "日";
         drawPatternMap(store.getters.selectedYMD);
-        }
+      }
     });
-    return {};
+    return {
+      selectYMD,
+    };
   },
 });
 </script>
@@ -80,16 +89,20 @@ export default defineComponent({
   height: 40%;
 }
 
-.selectWind{
-  width 100%
-  height 30px
+.selectWind {
+  width: 100%;
+  height: 30px;
 }
-.selectWind p{
-  float left
-  font 1em sans-serif
-  color white
-  margin-top 10px
-  margin-left 40px
 
+.selectWind p {
+  float: left;
+  font: 1em sans-serif;
+  color: white;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+.selecTime p {
+  color: white;
 }
 </style>
