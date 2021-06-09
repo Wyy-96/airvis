@@ -3,19 +3,30 @@
     <div class="Header">
       <p>AirPuVis</p>
     </div>
-    < class="information">
-      <div class = "selectWind">
-        <p> 是否显示风向</p>
-        <el-switch
-        v-model="value"
-        style="margin-top: 11px"
-        active-color="#13ce66"
-        inactive-color="#969292"
-      >
-      </el-switch>
+    <div class="information">
+      <div class="info">
+        <el-table
+        :data="tableData"
+        :cell-style="{padding:'5px 0px' }"
+        style="width: 80%;background-color:#000000">
+          <el-table-column prop="date" label="空气质量" width="80">
+          </el-table-column>
+          <el-table-column prop="address" label="污染指数分级" width="120"> </el-table-column>
+        </el-table>
       </div>
-    
-      <div class = "selecTime"><p> {{ selectYMD }}</p></div>
+      <div class="selectWind">
+        <p>是否显示风向</p>
+        <el-switch
+          v-model="value"
+          style="margin-top: 11px"
+          active-color="#13ce66"
+          inactive-color="#969292"
+        >
+        </el-switch>
+      </div>
+      <div class="selecTime">
+        <p>{{ selectYMD }}</p>
+      </div>
     </div>
     <div class="patternMap"></div>
   </div>
@@ -28,13 +39,9 @@ import store from "@/store";
 import { drawPatternMap } from "@/utils/patternMap";
 export default defineComponent({
   name: "SnapShot",
-  data() {
-    return {
-      value: true,
-    };
-  },
   setup() {
-    const selectYMD = ref("a");
+    const selectYMD = ref("");
+    const value = ref(true);
     const ymd: any = computed(() => store.getters.selectedYMD);
     watch(ymd, () => {
       if (ymd != null) {
@@ -48,8 +55,36 @@ export default defineComponent({
         drawPatternMap(store.getters.selectedYMD);
       }
     });
+
+    watch(value, () => {
+      if (value.value == true) d3.select("canvas").style("opacity", "1");
+      else d3.select("canvas").style("opacity", "0");
+    });
+
+
+    const tableData = [{
+            date: '优',
+            address: 'AQI < 50 '
+          }, {
+            date: '良',
+            address: 'AQI < 100 '
+          }, {
+            date: '轻度污染',
+            address: 'AQI < 150 '
+          }, {
+            date: '中度污染',
+            address: 'AQI < 200 '
+          }, {
+            date: '重度污染',
+            address: 'AQI < 300 '
+          }, {
+            date: '严重污染',
+            address: 'AQI < 500 '
+          }]
     return {
       selectYMD,
+      value,
+      tableData
     };
   },
 });
@@ -102,7 +137,14 @@ export default defineComponent({
   margin-left: 40px;
 }
 
+.info {
+  width: 100%;
+  height: 250px;
+  border: 1px solid red;
+}
+
 .selecTime p {
   color: white;
+  font: 2em sans-serif;
 }
 </style>

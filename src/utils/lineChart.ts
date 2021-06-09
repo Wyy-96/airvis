@@ -109,7 +109,7 @@ export function drawLineChart(data: any, ymd: any): void {
       .attr("height", height - 30)
       .attr("width", 2)
       .attr("x", (d, i) => xScale(i))
-      .attr("fill", "#DF7410")
+      .attr("fill", "#5A5A5A")
       .attr("opacity", 0)
 
     svg.append("g").selectAll("rect")

@@ -5,6 +5,7 @@
 import * as echarts from 'echarts';
 import axios from "axios";
 import store from "@/store";
+import * as d3 from "d3"
 
 export function WindDirection(ymd: any, hour: any) {
 
@@ -20,6 +21,9 @@ export function WindDirection(ymd: any, hour: any) {
   })
     .then(function (resp) {
       draw(resp.data.china, resp.data.winddata)
+      if( d3.selectAll("canvas").data().length == 2 ){
+        d3.select("canvas").remove()
+      }
     });
   
   
@@ -39,7 +43,6 @@ export function WindDirection(ymd: any, hour: any) {
         itemStyle: {
           opacity: 0,
           borderColor: echarts.color.modifyHSL('#ffffff'),
-          color: echarts.color.modifyHSL('#252725') //echarts.color.modifyHSL('#000000')
         },
         regions: [
           {

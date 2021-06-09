@@ -25,15 +25,10 @@ export default defineComponent({
       const ymd = store.getters.selectedYMD
       WindDirection(ymd,Hour.value[0]);
       drawAQIMap(ymd,Hour.value[0]);
-     
+     drawGeoMap()
     });
     return {
     };
-  },
-  mounted() {
-    this.$nextTick(function () {
-      drawGeoMap()
-    });
   },
 });
 </script>

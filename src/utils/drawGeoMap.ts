@@ -13,6 +13,7 @@ export function drawGeoMap(): void {
 
 
   function Draw(data: any) {
+    d3.select("#map").select("svg").remove()
     const divMap = d3.select("#map")
     const config = {
       width: parseInt(divMap.style("width")) - 2,
@@ -36,7 +37,7 @@ export function drawGeoMap(): void {
       .enter()
       .append("path")
       .attr("class", "province")
-      .style("fill", "#5BD665")
+      .style("fill", "#A7D65B")
       .attr("d", geopath)
 
   }
