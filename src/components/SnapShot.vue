@@ -15,7 +15,7 @@
         style="width: 100%;background-color:#000000">
           <el-table-column prop="date" label="空气质量" width="80">
           </el-table-column>
-          <el-table-column prop="address" label="污染指数分级" width="120"> </el-table-column> //<el-avatar shape="square" :size="50" ></el-avatar>
+          <el-table-column prop="address" label="污染指数分级" width="120"> </el-table-column> 
           <el-table-column prop="address"> <el-avatar shape="square" :size="15" ></el-avatar></el-table-column>
         </el-table>
       </div>
