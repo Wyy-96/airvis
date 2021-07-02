@@ -1,4 +1,4 @@
-# airvis
+# airvis  Excellence Award of ChinaVis Competition（AirPuVis）
 
 ## Project setup
 ```
