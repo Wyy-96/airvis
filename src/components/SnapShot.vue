@@ -80,7 +80,7 @@ export default defineComponent({
     const tableData = [{
             date: '优',
             address: 'AQI < 50 ',
-            color: '#5BD66'
+            color: '#5BD665'
           }, {
             date: '良',
             address: 'AQI < 100 ',
