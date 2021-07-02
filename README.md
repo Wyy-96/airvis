@@ -1,4 +1,7 @@
-# AirPuVis  Excellence Award of ChinaVis Competition（ChinaVis 2021）
+# AirPuVis：Excellence Award of ChinaVis Competition（ChinaVis 2021）
+ChinaVis2021挑战赛——空气污染可视化
+
+展示效果可查看说明文档
 
 ## Project setup
 ```
